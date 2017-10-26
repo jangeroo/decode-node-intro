@@ -18,7 +18,7 @@ function getIssPosition() {
   })
 }
 getIssPosition()
-.then(promise => console.log(promise))
+.then(promise => console.log('ISS position:', promise))
 
 
 function getAddressPosition(address) {
@@ -32,7 +32,7 @@ function getAddressPosition(address) {
   })
 }
 getAddressPosition('122 bevdale rd toronto')
-.then(promise => console.log(promise))
+.then(promise => console.log('Address position:', promise))
 
 
 function getCurrentTemperatureAtPosition(position) {
@@ -47,7 +47,7 @@ function getCurrentTemperatureAtPosition(position) {
 }
 getAddressPosition('11 florenc st barrie')
 .then(getCurrentTemperatureAtPosition)
-.then(promise => console.log(promise))
+.then(promise => console.log('Temperature at position:', promise + 'ºC'))
 
 
 function getCurrentTemperature(address) {
@@ -55,9 +55,17 @@ function getCurrentTemperature(address) {
     .then(getCurrentTemperatureAtPosition)
 }
 getCurrentTemperature('3 place ville marie montrel')
-.then(promise => console.log(promise))
+.then(promise => console.log('Temperature at address:', promise + 'ºC'))
 
 
 function getDistanceFromIss(address) {
-
+  return Promise.all([
+    getIssPosition(),
+    getAddressPosition(address)
+  ])
+  .then(res => {
+    return getDistance(res[0], res[1])
+  })
 }
+getDistanceFromIss('3 place ville marie montrel')
+.then(promise => console.log('Distance between ISS and address:', promise))
