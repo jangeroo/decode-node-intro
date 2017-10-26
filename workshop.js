@@ -50,10 +50,12 @@ getAddressPosition('11 florenc st barrie')
 .then(promise => console.log(promise))
 
 
-
 function getCurrentTemperature(address) {
-
+  return getAddressPosition(address)
+    .then(getCurrentTemperatureAtPosition)
 }
+getCurrentTemperature('3 place ville marie montrel')
+.then(promise => console.log(promise))
 
 
 function getDistanceFromIss(address) {
